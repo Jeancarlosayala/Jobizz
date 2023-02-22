@@ -1,8 +1,9 @@
-import { View, FlatList, StyleSheet, Animated } from 'react-native'
+import { View, FlatList, StyleSheet, Animated, Image } from 'react-native'
 import React, { useRef, useState } from 'react'
 import slides from '../slides'
 import OnboardingItems from './OnboardingItems'
 import Paginator from './Paginator'
+import Elipse from '../assets/onboarding/elipse.png'
 
 const Onboarding = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -17,6 +18,8 @@ const Onboarding = () => {
 
   return (
     <View className='bg-[#FAFAFD]' style={styles.container}>
+      <Image style={{resizeMode: 'contain', position: 'absolute'}} className='w-full top-0' source={Elipse} />
+
       <View style={{flex: 3}}>
         <FlatList
           data={slides}
