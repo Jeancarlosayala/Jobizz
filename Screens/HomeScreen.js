@@ -73,10 +73,6 @@ const HomeScreen = () => {
           </View>
         </View>
       </SafeAreaView>
-
-      <View className='h-[70px] absolute bottom-0 w-full'>
-        <BottomMenu />
-      </View>
     </View>
   )
 }
