@@ -4,6 +4,11 @@ import { View, Text, SafeAreaView, Image, StyleSheet, TextInput, TouchableOpacit
 import User from '../assets/home/user.png'
 import Search from '../assets/home/search.png'
 import Filter from '../assets/home/filter.png'
+import FeaturedJobs from '../Components/FeaturedJobs'
+
+import cards from '../cards'
+import PopularJobs from '../Components/PopularJobs'
+import BottomMenu from '../Components/BottomMenu'
 
 const HomeScreen = () => {
   const [fontsLoaded] = useFonts({
@@ -15,7 +20,7 @@ const HomeScreen = () => {
   if(!fontsLoaded) return null;
 
   return (
-    <View className='bg-[#FAFAFD]'>
+    <View className='bg-[#FAFAFD] h-full'>
       <SafeAreaView>
         <View className='flex-row items-center w-full justify-between px-[21px]'>
           <View>
@@ -35,7 +40,7 @@ const HomeScreen = () => {
         <View className='items-center mt-[42px] flex-row justify-evenly'>
           <View className='relative justify-center items-center'>
             <Image style={style.searchIcon} source={Search} />
-            <TextInput className='px-[35px]' placeholder='Search a job or position' style={style.searchJob} />
+            <TextInput className='pl-[54px] pr-[35px]' placeholder='Search a job or position' style={style.searchJob} />
           </View>
           <View>
             <TouchableOpacity style={style.filter} onPress={() => Alert.alert('Show Filters')}>
@@ -47,12 +52,31 @@ const HomeScreen = () => {
         <View>
           <View className='flex-row justify-between px-[24px] mt-[40px]'>
             <Text style={style.subTitle}>Featured Jobs</Text>
-            <TouchableOpacity>
+            <TouchableOpacity activeOpacity={1} onPress={() => Alert.alert('See All Featured Jobs')}>
               <Text style={style.seeAll}>See All</Text>
             </TouchableOpacity>
           </View>
+          <View className='pl-[24px] mt-[20px]'>
+            <FeaturedJobs data={cards} />
+          </View>
+        </View>
+
+        <View>
+          <View className='flex-row justify-between px-[24px] mt-[42px]'>
+            <Text style={style.subTitle}>Popular Jobs</Text>
+            <TouchableOpacity activeOpacity={1} onPress={() => Alert.alert('See All Featured Jobs')}>
+              <Text style={style.seeAll}>See All</Text>
+            </TouchableOpacity>
+          </View>
+          <View className='ml-[24px] mt-[20px]'>
+            <PopularJobs data={cards} />
+          </View>
         </View>
       </SafeAreaView>
+
+      <View className='h-[70px] absolute bottom-0 w-full'>
+        <BottomMenu />
+      </View>
     </View>
   )
 }
@@ -91,7 +115,9 @@ const style = StyleSheet.create({
     width: 263,
     height: 48,
     borderRadius: 12,
-    textAlign: 'center'
+    textAlign: 'center',
+    color: '#95969D',
+    fontSize: 15
   },
   searchIcon: {
     position: 'absolute',
