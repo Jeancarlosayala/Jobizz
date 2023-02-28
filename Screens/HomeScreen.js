@@ -8,7 +8,6 @@ import FeaturedJobs from '../Components/FeaturedJobs'
 
 import cards from '../cards'
 import PopularJobs from '../Components/PopularJobs'
-import BottomMenu from '../Components/BottomMenu'
 
 const HomeScreen = () => {
   const [fontsLoaded] = useFonts({
