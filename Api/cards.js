@@ -2,7 +2,7 @@ export default [
   {
     id: 1,
     company: 'Facebook',
-    logo: require('./assets/logo/Facebook.png'),
+    logo: require('../assets/logo/Facebook.png'),
     position: 'Junior Executive',
     payment: 180000,
     datePayment: 'year',
@@ -26,7 +26,7 @@ export default [
   {
     id: 2,
     company: 'Google',
-    logo: require('./assets/logo/google.png'),
+    logo: require('../assets/logo/google.png'),
     position: 'Product Designer',
     payment: 160000,
     datePayment: 'year',
