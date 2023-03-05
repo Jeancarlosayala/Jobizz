@@ -1,5 +1,5 @@
 import { useFonts, Inter_800ExtraBold, Inter_400Regular, Inter_700Bold } from '@expo-google-fonts/inter'
-import { View, Text, SafeAreaView, Image, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native'
+import { View, Text, SafeAreaView, Image, StyleSheet, TextInput, TouchableOpacity, Alert, Animated } from 'react-native'
 
 import User from '../assets/home/user.png'
 import Search from '../assets/home/search.png'
@@ -9,12 +9,27 @@ import FeaturedJobs from '../Components/FeaturedJobs'
 import cards from '../Api/cards'
 import PopularJobs from '../Components/PopularJobs'
 import { useNavigation } from '@react-navigation/native'
-import { useSelector } from 'react-redux'
-import { getUser } from '../Context/user'
+import { useDispatch, useSelector } from 'react-redux'
+import { getUser, setToggleMenu, toggleMenu } from '../Context/user'
+import { useCallback, useEffect, useRef } from 'react'
 
 const HomeScreen = () => {
   const user = useSelector(getUser)
-  
+  const menuToggle = useSelector((state) => state.user.toggleMenu)
+  const dispatch = useDispatch()
+
+  const progress = useRef(new Animated.Value(1)).current;
+
+  const showMenu = () => {
+    dispatch(setToggleMenu(!menuToggle))
+
+    Animated.timing(progress, {
+      toValue: menuToggle ? 1 : 0,
+      useNativeDriver: true,
+      duration: 500
+    }).start()
+  }
+
   const [fontsLoaded] = useFonts({
     Inter_800ExtraBold,
     Inter_700Bold,
@@ -22,24 +37,38 @@ const HomeScreen = () => {
   })
   const navigation = useNavigation()
 
-  if(!user) return <Text>Loading...</Text>
+  if (!user) return <Text>Loading...</Text>
   if (!fontsLoaded) return null;
 
   return (
     <View className='bg-[#FAFAFD] h-full'>
+      <Animated.View style={[style.toggleMenu, {
+        transform: [{
+          translateX: progress.interpolate({
+            inputRange: [0.2, 1],
+            outputRange: [0.5 * 2 * Math.PI, 1 * 259 * Math.PI]
+          })
+        }]
+      }]} className='bg-red-500 absolute h-[100vh] z-10 w-[311px]'>
+        <SafeAreaView>
+          <Text>Prueba menu</Text>
+        </SafeAreaView>
+      </Animated.View>
+
       <SafeAreaView>
         <View className='flex-row items-center w-full justify-between px-[21px]'>
-          <View>
-            <Text style={style.welcome}>Welcome to Jobseek {user && user.data.name}!</Text>
-            <Text style={style.discover}>Discover Jobs 🔥</Text>
-          </View>
           <View className='relative'>
-            <TouchableOpacity onPress={() => user.loggedIn ? Alert.alert('menu') : navigation.navigate('Login')}>
+            <TouchableOpacity onPress={() => user.loggedIn ?
+              showMenu() : navigation.navigate('Login')}>
               <View className='rounded-full items-center justify-center' style={style.roundedNotify}>
                 <View className='rounded-full' style={style.notify} />
               </View>
               <Image style={[style.userImage, { resizeMode: 'contain' }]} source={User} />
             </TouchableOpacity>
+          </View>
+          <View>
+            <Text className='text-right' style={style.welcome}>Welcome to Jobseek {user && user.data.name}!</Text>
+            <Text className='text-right' style={style.discover}>🔥 Discover Jobs</Text>
           </View>
         </View>
 
@@ -143,6 +172,9 @@ const style = StyleSheet.create({
   seeAll: {
     color: '#95969D',
     fontSize: 14
+  },
+  toggleMenu: {
+    right: -200
   }
 })
 
