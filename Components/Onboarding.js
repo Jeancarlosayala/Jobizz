@@ -1,6 +1,6 @@
 import { View, FlatList, StyleSheet, Animated, Image, Text, TouchableOpacity } from 'react-native'
 import React, { useRef, useState } from 'react'
-import slides from '../slides'
+import slides from '../Api/slides'
 import OnboardingItems from './OnboardingItems'
 import Paginator from './Paginator'
 import Elipse from '../assets/onboarding/elipse.png'
@@ -23,7 +23,7 @@ const Onboarding = () => {
     if (currentIndex < slides.length - 1) {
       slideRef.current.scrollToIndex({ index: currentIndex + 1 })
     } else {
-      navigation.navigate('Home')
+      navigation.navigate('Main')
     }
   }
 
