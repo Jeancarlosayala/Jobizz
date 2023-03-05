@@ -1,4 +1,4 @@
-import { useFonts, Inter_800ExtraBold, Inter_400Regular, Inter_700Bold} from '@expo-google-fonts/inter'
+import { useFonts, Inter_800ExtraBold, Inter_400Regular, Inter_700Bold } from '@expo-google-fonts/inter'
 import { View, Text, SafeAreaView, Image, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native'
 
 import User from '../assets/home/user.png'
@@ -6,28 +6,35 @@ import Search from '../assets/home/search.png'
 import Filter from '../assets/home/filter.png'
 import FeaturedJobs from '../Components/FeaturedJobs'
 
-import cards from '../cards'
+import cards from '../Api/cards'
 import PopularJobs from '../Components/PopularJobs'
+import { useNavigation } from '@react-navigation/native'
+import { useSelector } from 'react-redux'
+import { getUser } from '../Context/user'
 
 const HomeScreen = () => {
+  const user = useSelector(getUser)
+  
   const [fontsLoaded] = useFonts({
     Inter_800ExtraBold,
     Inter_700Bold,
     Inter_400Regular,
   })
+  const navigation = useNavigation()
 
-  if(!fontsLoaded) return null;
+  if(!user) return <Text>Loading...</Text>
+  if (!fontsLoaded) return null;
 
   return (
     <View className='bg-[#FAFAFD] h-full'>
       <SafeAreaView>
         <View className='flex-row items-center w-full justify-between px-[21px]'>
           <View>
-            <Text style={style.welcome}>Welcome to Jobseek!</Text>
+            <Text style={style.welcome}>Welcome to Jobseek {user && user.data.name}!</Text>
             <Text style={style.discover}>Discover Jobs 🔥</Text>
           </View>
           <View className='relative'>
-            <TouchableOpacity onPress={() => Alert.alert('Redirect to Profile')}>
+            <TouchableOpacity onPress={() => user.loggedIn ? Alert.alert('menu') : navigation.navigate('Login')}>
               <View className='rounded-full items-center justify-center' style={style.roundedNotify}>
                 <View className='rounded-full' style={style.notify} />
               </View>
