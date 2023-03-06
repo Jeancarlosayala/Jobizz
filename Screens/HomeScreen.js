@@ -10,8 +10,8 @@ import cards from '../Api/cards'
 import PopularJobs from '../Components/PopularJobs'
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
-import { getUser, setToggleMenu, toggleMenu } from '../Context/user'
-import { useCallback, useEffect, useRef } from 'react'
+import { getUser, setToggleMenu } from '../Context/user'
+import { useRef } from 'react'
 
 const HomeScreen = () => {
   const user = useSelector(getUser)
@@ -46,7 +46,7 @@ const HomeScreen = () => {
         transform: [{
           translateX: progress.interpolate({
             inputRange: [0.2, 1],
-            outputRange: [0.5 * 2 * Math.PI, 1 * 259 * Math.PI]
+            outputRange: [-0.5 * 2 * Math.PI, -1 * 100 * Math.PI]
           })
         }]
       }]} className='bg-red-500 absolute h-[100vh] z-10 w-[311px]'>
@@ -57,6 +57,10 @@ const HomeScreen = () => {
 
       <SafeAreaView>
         <View className='flex-row items-center w-full justify-between px-[21px]'>
+          <View>
+            <Text style={style.welcome}>Welcome to Jobseek {user && user.data.name}!</Text>
+            <Text style={style.discover}>🔥 Discover Jobs</Text>
+          </View>
           <View className='relative'>
             <TouchableOpacity onPress={() => user.loggedIn ?
               showMenu() : navigation.navigate('Login')}>
@@ -65,10 +69,6 @@ const HomeScreen = () => {
               </View>
               <Image style={[style.userImage, { resizeMode: 'contain' }]} source={User} />
             </TouchableOpacity>
-          </View>
-          <View>
-            <Text className='text-right' style={style.welcome}>Welcome to Jobseek {user && user.data.name}!</Text>
-            <Text className='text-right' style={style.discover}>🔥 Discover Jobs</Text>
           </View>
         </View>
 
@@ -174,7 +174,7 @@ const style = StyleSheet.create({
     fontSize: 14
   },
   toggleMenu: {
-    right: -200
+    left: -75
   }
 })
 
