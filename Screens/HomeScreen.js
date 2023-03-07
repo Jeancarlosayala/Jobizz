@@ -11,7 +11,8 @@ import PopularJobs from '../Components/PopularJobs'
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
 import { getUser, setToggleMenu } from '../Context/user'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
+import SideBar from '../Components/SideBar'
 
 const HomeScreen = () => {
   const user = useSelector(getUser)
@@ -22,13 +23,15 @@ const HomeScreen = () => {
 
   const showMenu = () => {
     dispatch(setToggleMenu(!menuToggle))
+  }
 
+  useEffect(() => {
     Animated.timing(progress, {
-      toValue: menuToggle ? 1 : 0,
+      toValue: menuToggle ? 0 : 1,
       useNativeDriver: true,
       duration: 500
     }).start()
-  }
+  }, [menuToggle])
 
   const [fontsLoaded] = useFonts({
     Inter_800ExtraBold,
@@ -49,17 +52,17 @@ const HomeScreen = () => {
             outputRange: [-0.5 * 2 * Math.PI, -1 * 100 * Math.PI]
           })
         }]
-      }]} className='bg-red-500 absolute h-[100vh] z-10 w-[311px]'>
+      }]} className='bg-white absolute h-[100vh] z-10 w-[311px]'>
         <SafeAreaView>
-          <Text>Prueba menu</Text>
+          <SideBar />
         </SafeAreaView>
       </Animated.View>
 
       <SafeAreaView>
         <View className='flex-row items-center w-full justify-between px-[21px]'>
           <View>
-            <Text style={style.welcome}>Welcome to Jobseek {user && user.data.name}!</Text>
-            <Text style={style.discover}>🔥 Discover Jobs</Text>
+            <Text style={style.welcome}>Welcome to Jobizz {user.loggedIn && user.data.name}!</Text>
+            <Text style={style.discover}>Discover Jobs 🔥 </Text>
           </View>
           <View className='relative'>
             <TouchableOpacity onPress={() => user.loggedIn ?
