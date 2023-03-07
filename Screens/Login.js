@@ -5,6 +5,8 @@ import { useFonts, Inter_800ExtraBold, Inter_500Medium, Inter_400Regular, Inter_
 import BackArrow from '../assets/auth/back.png'
 import Logo from '../assets/logo/Jobizz.png'
 import { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { setUser } from '../Context/user'
 
 const formFields = {
   email: '',
@@ -15,6 +17,8 @@ const Login = () => {
   const [field, setField] = useState(formFields)
   const [emailInput, setEmailInput] = useState('')
   const [passwordInput, setPasswordInput] = useState('')
+  const dispatch = useDispatch();
+  const navigation = useNavigation()
 
   const handlerLogin = async () => {
     if (field.email === '' || field.password === '') { return Alert.alert('Please complete all the inputs') }
@@ -27,7 +31,12 @@ const Login = () => {
       body: JSON.stringify(field)
     })
       .then(res => res.json())
-      .then(data => console.log(data))
+      .then(data => {
+        dispatch(setUser(data));
+        if (data.loggedIn === true) {
+          navigation.navigate('Main');
+        }
+      })
       .catch(err => console.log(err))
   }
 
@@ -42,7 +51,6 @@ const Login = () => {
     Inter_400Regular,
     Inter_300Light,
   })
-  const navigation = useNavigation()
 
   if (!fontsLoaded) return null;
 
