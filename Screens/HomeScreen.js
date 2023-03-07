@@ -52,10 +52,12 @@ const HomeScreen = () => {
             outputRange: [-0.5 * 2 * Math.PI, -1 * 100 * Math.PI]
           })
         }]
-      }]} className='bg-white absolute h-[100vh] z-10 w-[311px]'>
-        <SafeAreaView>
-          <SideBar />
-        </SafeAreaView>
+      }]} className=' absolute h-[100vh] z-10 w-full'>
+        <View className='bg-white h-full w-[311px]'>
+          <SafeAreaView>
+            <SideBar />
+          </SafeAreaView>
+        </View>
       </Animated.View>
 
       <SafeAreaView>
@@ -177,7 +179,8 @@ const style = StyleSheet.create({
     fontSize: 14
   },
   toggleMenu: {
-    left: -75
+    left: -75,
+    backgroundColor: 'rgba(0,0,0,0)',
   }
 })
 
