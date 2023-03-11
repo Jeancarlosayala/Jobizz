@@ -7,6 +7,7 @@ import { setUser } from './Context/user';
 import Login from './Screens/Login';
 import Main from './Screens/Main';
 import Profile from './Screens/Profile';
+import Register from './Screens/Register';
 
 import { store } from './store';
 
@@ -27,7 +28,7 @@ const Views = () => {
 
   useEffect(() => {
     const getSession = async () => {
-      await fetch('http://192.168.1.6:4000/api/jobizz/login/')
+      await fetch('http://192.168.1.4:4000/api/jobizz/login/')
         .then(res => res.json())
         .then(data => dispatch(setUser(data)))
         .catch(err => console.log(err))
@@ -40,6 +41,8 @@ const Views = () => {
       {/* <Stack.Screen name="Onboarding" component={Onboarding} options={{headerShown: false}} /> */}
       <Stack.Screen name="Main" component={Main} options={{ headerShown: false, presentation: 'fullScreenModal' }} />
       <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+      <Stack.Screen name="Register" component={Register} options={{ headerShown: false }} />
+      <Stack.Screen name="Profile" component={Profile} options={{ headerShown: false, presentation: 'fullScreenModal' }} />
     </Stack.Navigator>
   )
 }
