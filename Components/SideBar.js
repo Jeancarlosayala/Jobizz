@@ -8,10 +8,13 @@ import { useFonts, Inter_800ExtraBold, Inter_700Bold, Inter_600SemiBold, Inter_5
 import sidebarOptions from '../Api/sidebarOptions'
 import LogOutIcon from '../assets/icons/logout.png'
 import CloseIcon from '../assets/icons/close.png'
+import { useNavigation } from '@react-navigation/native'
 
 const SideBar = () => {
   const user = useSelector(getUser);
   const dispatch = useDispatch();
+  const navigation = useNavigation()
+
   const [fontsLoaded] = useFonts({
     Inter_800ExtraBold,
     Inter_700Bold,
@@ -44,7 +47,7 @@ const SideBar = () => {
         <View className='items-center space-y-[6px]'>
           <Text style={style.username}>{user.loggedIn && user.data.name}</Text>
           <Text style={style.role}>Full Stack Developer</Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
             <Text style={style.profile}>View Profile</Text>
           </TouchableOpacity>
         </View>
