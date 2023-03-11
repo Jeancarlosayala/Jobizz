@@ -23,7 +23,7 @@ const Login = () => {
   const handlerLogin = async () => {
     if (field.email === '' || field.password === '') { return Alert.alert('Please complete all the inputs') }
 
-    await fetch('http://192.168.1.6:4000/api/jobizz/login/', {
+    await fetch('http://192.168.1.4:4000/api/jobizz/login/', {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
@@ -55,7 +55,7 @@ const Login = () => {
   if (!fontsLoaded) return null;
 
   return (
-    <View className='bg-[#FAFAFD] px-[25px]'>
+    <View className='bg-[#FAFAFD] px-[25px] h-full'>
       <SafeAreaView>
         <TouchableOpacity className='h-[24px] w-[24px]' onPress={() => navigation.goBack()}>
           <Image className='h-full w-[20px]' style={{ resizeMode: 'contain' }} source={BackArrow} />
@@ -86,6 +86,13 @@ const Login = () => {
 
           <TouchableOpacity onPress={() => handlerLogin()} className='mt-[32px]' style={style.button}>
             <Text style={style.textButton}>Log in</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View className='items-center mt-[275px] flex-row justify-center'>
+          <Text style={style.textRegular} className='text-[#BDBEC2]'>Haven’t an account? </Text>
+          <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+            <Text style={style.textRegular} className='text-[#356899]'>Register</Text>
           </TouchableOpacity>
         </View>
       </SafeAreaView>
@@ -122,6 +129,10 @@ const style = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontFamily: 'Inter_500Medium',
+  },
+  textRegular: {
+    fontFamily: 'Inter_400Regular',
+    fontSize: 14
   }
 })
 
