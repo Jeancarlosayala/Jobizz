@@ -6,18 +6,18 @@ import Search from '../assets/home/search.png'
 import Filter from '../assets/home/filter.png'
 import FeaturedJobs from '../Components/FeaturedJobs'
 
-import cards from '../Api/cards'
 import PopularJobs from '../Components/PopularJobs'
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
 import { getUser, setToggleMenu } from '../Context/user'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import SideBar from '../Components/SideBar'
 
 const HomeScreen = () => {
   const user = useSelector(getUser)
   const menuToggle = useSelector((state) => state.user.toggleMenu)
   const dispatch = useDispatch()
+  const [cardJobs, setCardJobs] = useState(null);
 
   const progress = useRef(new Animated.Value(1)).current;
 
@@ -31,6 +31,11 @@ const HomeScreen = () => {
       useNativeDriver: true,
       duration: 500
     }).start()
+
+    fetch('http://192.168.1.4:4000/api/jobizz/jobs/')
+    .then(res => res.json())
+    .then(res => setCardJobs(res.data))
+    .catch(err => console.log(err))
   }, [menuToggle])
 
   const [fontsLoaded] = useFonts({
@@ -40,9 +45,9 @@ const HomeScreen = () => {
   })
   const navigation = useNavigation()
 
-  if (!user) return <Text>Loading...</Text>
+  if (!user || !cardJobs) return <Text>Loading...</Text>
   if (!fontsLoaded) return null;
-
+  
   return (
     <View className='bg-[#FAFAFD] h-full'>
       <Animated.View style={[style.toggleMenu, {
@@ -96,8 +101,8 @@ const HomeScreen = () => {
               <Text style={style.seeAll}>See All</Text>
             </TouchableOpacity>
           </View>
-          <View className='pl-[24px] mt-[20px]'>
-            <FeaturedJobs data={cards} />
+          <View className='px-[21px] mt-[20px]'>
+            <FeaturedJobs data={cardJobs} />
           </View>
         </View>
 
@@ -109,7 +114,7 @@ const HomeScreen = () => {
             </TouchableOpacity>
           </View>
           <View className='ml-[24px] mt-[20px]'>
-            <PopularJobs data={cards} />
+            <PopularJobs data={cardJobs} />
           </View>
         </View>
       </SafeAreaView>
