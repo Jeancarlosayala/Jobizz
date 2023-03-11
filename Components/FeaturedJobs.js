@@ -30,14 +30,14 @@ const CardItem = ({ item }) => {
 
   return (
     <TouchableOpacity activeOpacity={0.9} onPress={() => Alert.alert('See Job')}>
-      <View style={[style.card, { backgroundColor: item.bgColor }]}>
+      <View style={[style.card, { backgroundColor: '#356899' }]}>
         <Image source={BGCards} className='w-full h-full opacity-[0.1] absolute' />
         <View className='flex-row items-center justify-evenly mt-[22px]'>
           <View style={style.logo}>
-            <Image source={item.logo} className='w-[22px] h-[22px]' />
+            <Image source={{uri: item.image}} style={{resizeMode: 'contain'}} className='w-[22px] h-[22px]' />
           </View>
           <View>
-            <Text style={style.position}>{item.position}</Text>
+            <Text style={style.position}>{item.jobname}</Text>
             <Text style={style.company}>{item.company}</Text>
           </View>
           <View className='relative'>
@@ -49,10 +49,10 @@ const CardItem = ({ item }) => {
 
         <View className='flex-row items-center justify-evenly mt-[24px]'>
           {
-            item.categories.map(({ category, id }) => {
+            item.categories.map((i, idx) => {
               return (
-                <View style={style.categories} key={id}>
-                  <Text style={{ fontFamily: 'Inter_600SemiBold', color: 'white' }} className='text-[11px]'>{category}</Text>
+                <View style={style.categories} key={idx}>
+                  <Text style={{ fontFamily: 'Inter_600SemiBold', color: 'white' }} className='text-[11px]'>{i}</Text>
                 </View>
               )
             })
@@ -60,7 +60,7 @@ const CardItem = ({ item }) => {
         </View>
 
         <View className='flex-row items-center justify-around mt-[24px]'>
-          <Text style={{ fontFamily: 'Inter_600SemiBold', color: '#fff', fontSize: 13 }}>{item.payment}/{item.datePayment}</Text>
+          <Text style={{ fontFamily: 'Inter_600SemiBold', color: '#fff', fontSize: 13 }}>{item.payment}</Text>
           <Text style={{ fontFamily: 'Inter_600SemiBold', color: '#fff', fontSize: 13 }}>{item.location}</Text>
         </View>
       </View>
@@ -70,11 +70,11 @@ const CardItem = ({ item }) => {
 
 const style = StyleSheet.create({
   card: {
-    width: 280,
+    width: 327,
     height: 186,
-    marginLeft: 10,
     borderRadius: 24,
-    position: 'relative'
+    position: 'relative',
+    marginHorizontal: 3
   },
   logo: {
     height: 46,
