@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, StyleSheet, Image, TouchableOpacity } from 'react-native'
+import { View, Text, SafeAreaView, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { useFonts, Inter_800ExtraBold, Inter_700Bold, Inter_600SemiBold, Inter_500Medium, Inter_400Regular, Inter_300Light } from '@expo-google-fonts/inter'
 
@@ -38,7 +38,7 @@ const JobDetailScreen = () => {
             <View style={style.logoContainer}>
               <Image style={style.logo} source={{ uri: image }} />
             </View>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => Alert.alert('save job')}>
               <Image style={style.icon} source={Save} />
             </TouchableOpacity>
           </View>
@@ -70,8 +70,13 @@ const JobDetailScreen = () => {
         </SafeAreaView>
       </View>
 
-      <View>
+      <View className='mt-[36px] mb-[34px]'>
         <InfoScroll info={info} />
+        <View className='w-full items-center'>
+          <TouchableOpacity style={style.apply} onPress={() => Alert.alert('apply job')}>
+            <Text style={style.applyText}>Apply Now</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   )
@@ -103,6 +108,19 @@ const style = StyleSheet.create({
     width: 24,
     height: 24,
     resizeMode: 'contain'
+  },
+  apply:{
+    width: 327,
+    height: 56,
+    backgroundColor: '#356899',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 5
+  },
+  applyText:{
+    color: '#fff',
+    fontFamily: 'Inter_500Medium',
+    fontSize: 16
   }
 })
 
