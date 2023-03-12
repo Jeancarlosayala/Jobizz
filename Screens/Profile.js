@@ -4,7 +4,6 @@ import * as ImagePicker from 'expo-image-picker';
 
 
 const Profile = () => {
-  const [image, setImage] = useState('')
 
   const selectFile = async () => {
     const formData = new FormData();
@@ -21,19 +20,15 @@ const Profile = () => {
       type: 'image/jpeg',
     });
 
-    formData.append('des', 'test')
-
     if (!result.canceled) {
       // Aquí puedes hacer algo con la imagen seleccionada, como enviarla a un servidor.
-      fetch('http://192.168.1.4:4000/api/jobizz/images/', {
-        method: 'POST',
+      fetch('http://192.168.1.4:4000/api/jobizz/user/', {
+        method: 'PUT',
         headers: {
           'Content-Type': 'multipart/form-data; boundary=----MyCustomBoundary123'
         },
         body: formData
       })
-
-      setImage(result.assets[0].uri);
     }
   }
 
