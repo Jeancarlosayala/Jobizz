@@ -17,10 +17,11 @@ const PopularJobs = ({ data }) => {
   if (!fontsLoaded) return null;
 
   return (
-    <View>
+    <View style={{height: 165}}>
       <FlatList
         data={data}
         renderItem={({ item }, idx) => <PopularJobsItem idx={idx} item={item} />}
+        showsVerticalScrollIndicator={false}
       />
     </View>
   )
