@@ -26,16 +26,18 @@ const HomeScreen = () => {
   }
 
   useEffect(() => {
+    fetch('http://192.168.1.4:4000/api/jobizz/jobs/')
+    .then(res => res.json())
+    .then(res => setCardJobs(res.data))
+    .catch(err => console.log(err))
+  }, [])
+
+  useEffect(() => {
     Animated.timing(progress, {
       toValue: menuToggle ? 0 : 1,
       useNativeDriver: true,
       duration: 500
     }).start()
-
-    fetch('http://192.168.1.4:4000/api/jobizz/jobs/')
-    .then(res => res.json())
-    .then(res => setCardJobs(res.data))
-    .catch(err => console.log(err))
   }, [menuToggle])
 
   const [fontsLoaded] = useFonts({
@@ -77,7 +79,7 @@ const HomeScreen = () => {
               <View className='rounded-full items-center justify-center' style={style.roundedNotify}>
                 <View className='rounded-full' style={style.notify} />
               </View>
-              <Image style={[style.userImage, { resizeMode: 'contain' }]} source={User} />
+              <Image style={[style.userImage, { resizeMode: 'contain' }]} source={user.loggedIn && user.data.image ? {uri: user.data.image} : User} />
             </TouchableOpacity>
           </View>
         </View>
@@ -125,7 +127,8 @@ const HomeScreen = () => {
 const style = StyleSheet.create({
   userImage: {
     height: 54,
-    width: 54
+    width: 54,
+    borderRadius: 1000
   },
   roundedNotify: {
     backgroundColor: '#fff',
