@@ -24,7 +24,7 @@ const SideBar = () => {
   })
 
   const logOut = async () => {
-    await fetch('http://192.168.1.6:4000/api/jobizz/logout/', {
+    await fetch('http://192.168.1.4:4000/api/jobizz/logout/', {
       method: 'POST'
     }).then(res => res.json())
       .then(data => dispatch(setUser(data)))
@@ -42,7 +42,7 @@ const SideBar = () => {
           <TouchableOpacity className='absolute right-[24px]' onPress={() => dispatch(setToggleMenu(false))}>
             <Image style={style.close} source={CloseIcon} />
           </TouchableOpacity>
-          <Image style={[style.userImage, { resizeMode: 'contain' }]} source={User} />
+          <Image style={[style.userImage, { resizeMode: 'contain' }]} source={user.loggedIn && user.data.image ? {uri: user.data.image} : User} />
         </View>
         <View className='items-center space-y-[6px]'>
           <Text style={style.username}>{user.loggedIn && user.data.name}</Text>
@@ -76,7 +76,8 @@ const SideBar = () => {
 const style = StyleSheet.create({
   userImage: {
     height: 104,
-    width: 104
+    width: 104,
+    borderRadius: 1000
   },
   username: {
     fontFamily: 'Inter_600SemiBold',
