@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { Provider, useDispatch } from 'react-redux';
 import Onboarding from './Components/Onboarding';
 import { setUser } from './Context/user';
+import JobDetailScreen from './Screens/JobDetailScreen';
 import Login from './Screens/Login';
 import Main from './Screens/Main';
 import Profile from './Screens/Profile';
@@ -43,6 +44,7 @@ const Views = () => {
       <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
       <Stack.Screen name="Register" component={Register} options={{ headerShown: false }} />
       <Stack.Screen name="Profile" component={Profile} options={{ headerShown: false, presentation: 'fullScreenModal' }} />
+      <Stack.Screen name="JobDetail" component={JobDetailScreen} options={{ headerShown: false }} />
     </Stack.Navigator>
   )
 }
