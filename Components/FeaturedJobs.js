@@ -3,6 +3,8 @@ import React from 'react'
 import BGCards from '../assets/home/backgroundCard.png'
 import BookMark from '../assets/home/bookmark.png'
 import { useFonts, Inter_800ExtraBold, Inter_700Bold, Inter_600SemiBold, Inter_400Regular } from '@expo-google-fonts/inter'
+import { useNavigation } from '@react-navigation/native'
+import Currency from 'react-currency-formatter'
 
 const FeaturedJobs = ({ data }) => {
   return (
@@ -19,6 +21,7 @@ const FeaturedJobs = ({ data }) => {
 }
 
 const CardItem = ({ item }) => {
+  const navigation = useNavigation()
   const [fontsLoaded] = useFonts({
     Inter_800ExtraBold,
     Inter_700Bold,
@@ -29,12 +32,12 @@ const CardItem = ({ item }) => {
   if (!fontsLoaded) return null;
 
   return (
-    <TouchableOpacity activeOpacity={0.9} onPress={() => Alert.alert('See Job')}>
+    <TouchableOpacity activeOpacity={0.9} onPress={() => { navigation.navigate('JobDetail', { item }) }}>
       <View style={[style.card, { backgroundColor: '#356899' }]}>
         <Image source={BGCards} className='w-full h-full opacity-[0.1] absolute' />
         <View className='flex-row items-center justify-evenly mt-[22px]'>
           <View style={style.logo}>
-            <Image source={{uri: item.image}} style={{resizeMode: 'contain'}} className='w-[22px] h-[22px]' />
+            <Image source={{ uri: item.image }} style={{ resizeMode: 'contain' }} className='w-[22px] h-[22px]' />
           </View>
           <View>
             <Text style={style.position}>{item.jobname}</Text>
@@ -60,7 +63,9 @@ const CardItem = ({ item }) => {
         </View>
 
         <View className='flex-row items-center justify-around mt-[24px]'>
-          <Text style={{ fontFamily: 'Inter_600SemiBold', color: '#fff', fontSize: 13 }}>{item.payment}</Text>
+          <Text style={{ fontFamily: 'Inter_600SemiBold', color: '#fff', fontSize: 13 }}>
+          $<Currency quantity={item.payment} pattern='##,### ' />
+          </Text>
           <Text style={{ fontFamily: 'Inter_600SemiBold', color: '#fff', fontSize: 13 }}>{item.location}</Text>
         </View>
       </View>
