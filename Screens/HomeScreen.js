@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getUser, setToggleMenu } from '../Context/user'
 import { useEffect, useRef, useState } from 'react'
 import SideBar from '../Components/SideBar'
+import { setUserAppliedJobs } from '../Context/applied'
 
 const HomeScreen = () => {
   const user = useSelector(getUser)
@@ -26,11 +27,22 @@ const HomeScreen = () => {
   }
 
   useEffect(() => {
-    fetch('http://192.168.1.4:4000/api/jobizz/jobs/')
-    .then(res => res.json())
-    .then(res => setCardJobs(res.data))
-    .catch(err => console.log(err))
+    fetch('http://192.168.1.4:4000/api/jobizz/job/')
+      .then(res => res.json())
+      .then(res => setCardJobs(res.data))
+      .catch(err => console.log(err))
   }, [])
+
+  useEffect(() => {
+    (async () => {
+      if (user) {
+        await fetch(`http://192.168.1.4:4000/api/jobizz/applied/${user && user.data.id}`)
+          .then(res => res.json())
+          .then(data => dispatch(setUserAppliedJobs(data)))
+          .catch(err => console.log(err))
+      }
+    })()
+  }, [user])
 
   useEffect(() => {
     Animated.timing(progress, {
@@ -49,7 +61,7 @@ const HomeScreen = () => {
 
   if (!user || !cardJobs) return <Text>Loading...</Text>
   if (!fontsLoaded) return null;
-  
+
   return (
     <View className='bg-[#FAFAFD] h-full'>
       <Animated.View style={[style.toggleMenu, {
@@ -79,7 +91,7 @@ const HomeScreen = () => {
               <View className='rounded-full items-center justify-center' style={style.roundedNotify}>
                 <View className='rounded-full' style={style.notify} />
               </View>
-              <Image style={[style.userImage, { resizeMode: 'contain' }]} source={user.loggedIn && user.data.image ? {uri: user.data.image} : User} />
+              <Image style={[style.userImage, { resizeMode: 'contain' }]} source={user.loggedIn && user.data.image ? { uri: user.data.image } : User} />
             </TouchableOpacity>
           </View>
         </View>

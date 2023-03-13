@@ -23,7 +23,7 @@ const Login = () => {
   const handlerLogin = async () => {
     if (field.email === '' || field.password === '') { return Alert.alert('Please complete all the inputs') }
 
-    await fetch('http://192.168.1.4:4000/api/jobizz/login/', {
+    await fetch('http://192.168.1.4:4000/api/jobizz/user/login/', {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",

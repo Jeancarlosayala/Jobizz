@@ -27,7 +27,7 @@ const Register = () => {
   const handlerRegister = async () => {
     if (field.email === '' || field.password === '') { return Alert.alert('Please complete all the inputs') }
 
-    await fetch('http://192.168.1.6:4000/api/jobizz/register/', {
+    await fetch('http://192.168.1.6:4000/api/jobizz/user/register/', {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",

@@ -24,7 +24,7 @@ const SideBar = () => {
   })
 
   const logOut = async () => {
-    await fetch('http://192.168.1.4:4000/api/jobizz/logout/', {
+    await fetch('http://192.168.1.4:4000/api/jobizz/user/logout/', {
       method: 'POST'
     }).then(res => res.json())
       .then(data => dispatch(setUser(data)))
@@ -55,9 +55,9 @@ const SideBar = () => {
 
       <View className='ml-[40px] space-y-[28px] mt-[40px]'>
         {
-          sidebarOptions.map(({ id, option, icon }) => {
+          sidebarOptions.map(({ id, option, icon, screen }) => {
             return (
-              <TouchableOpacity className='flex-row items-center' key={id}>
+              <TouchableOpacity onPress={() => navigation.navigate(screen)} className='flex-row items-center' key={id}>
                 <Image style={style.icon} source={icon} />
                 <Text style={style.sidebarOptionText}>{option}</Text>
               </TouchableOpacity>
