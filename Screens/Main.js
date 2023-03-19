@@ -9,14 +9,14 @@ import SavedScreen from './SavedScreen';
 import NotificationsSecreen from './NotificationsSecreen';
 
 //Icons
-import Home from '../assets/home/home.png'
-import HomeSelected from '../assets/home/homeSelected.png'
-import Messages from '../assets/home/messages.png'
-import MessagesSelected from '../assets/home/messagesSelected.png'
-import Saved from '../assets/home/saved.png'
-import SavedSelected from '../assets/home/savedSelected.png'
-import Notifications from '../assets/home/notifications.png'
-import NotificationsSelected from '../assets/home/notificationsSelected.png'
+import Home from '@assets/home/home.png'
+import HomeSelected from '@assets/home/homeSelected.png'
+import Messages from '@assets/home/messages.png'
+import MessagesSelected from '@assets/home/messagesSelected.png'
+import Saved from '@assets/home/saved.png'
+import SavedSelected from '@assets/home/savedSelected.png'
+import Notifications from '@assets/home/notifications.png'
+import NotificationsSelected from '@assets/home/notificationsSelected.png'
 
 const Tab = createBottomTabNavigator();
 

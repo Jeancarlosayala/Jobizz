@@ -2,9 +2,9 @@ import { View, Text, SafeAreaView, Image, TextInput, StyleSheet } from 'react-na
 import React from 'react'
 import { useFonts, Inter_700Bold, Inter_600SemiBold, Inter_400Regular } from '@expo-google-fonts/inter'
 
-import SearchGray from '../assets/home/search.png'
-import Search from '../assets/home/searchBlue.png'
-import Edit from '../assets/home/edit.png'
+import SearchGray from '@assets/home/search.png'
+import Search from '@assets/home/searchBlue.png'
+import Edit from '@assets/home/edit.png'
 
 const MessagesScreen = () => {
   const [fontsLoaded] = useFonts({

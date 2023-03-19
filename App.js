@@ -2,14 +2,14 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useEffect } from 'react';
 import { Provider, useDispatch } from 'react-redux';
-import Onboarding from './Components/Onboarding';
-import { setUser } from './Context/user';
-import ApplicationsScreen from './Screens/ApplicationsScreen/ApplicationsScreen';
-import JobDetailScreen from './Screens/JobDetailScreen';
-import Login from './Screens/Login';
-import Main from './Screens/Main';
-import Profile from './Screens/Profile';
-import Register from './Screens/Register';
+import Onboarding from '@Components/Onboarding';
+import { setUser } from '@Context/user';
+import ApplicationsScreen from '@Screens/ApplicationsScreen/ApplicationsScreen';
+import JobDetailScreen from '@Screens/JobDetail/JobDetailScreen';
+import Login from '@Screens/Login';
+import Main from '@Screens/Main';
+import Profile from '@Screens/Profile';
+import Register from '@Screens/Register';
 
 import { store } from './store';
 

@@ -2,11 +2,11 @@ import { View, Text, SafeAreaView, Image, TouchableOpacity, StyleSheet, TextInpu
 import { useNavigation } from '@react-navigation/native'
 import { useFonts, Inter_800ExtraBold, Inter_500Medium, Inter_400Regular, Inter_300Light, Inter_700Bold } from '@expo-google-fonts/inter'
 
-import BackArrow from '../assets/auth/back.png'
-import Logo from '../assets/logo/Jobizz.png'
+import BackArrow from '@assets/auth/back.png'
+import Logo from '@assets/logo/Jobizz.png'
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { setUser } from '../Context/user'
+import { setUser } from '@Context/user'
 
 const formFields = {
   email: '',
