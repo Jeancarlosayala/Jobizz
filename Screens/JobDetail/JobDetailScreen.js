@@ -4,10 +4,11 @@ import { useFonts, Inter_800ExtraBold, Inter_700Bold, Inter_600SemiBold, Inter_5
 
 import Currency from 'react-currency-formatter'
 
-import BGCards from '../assets/home/backgroundCard.png'
-import Back from '../assets/icons/back_white.png'
-import Save from '../assets/icons/save_white.png'
-import InfoScroll from '../Components/InfoScroll'
+import BGCards from '@assets/home/backgroundCard.png'
+import Back from '@assets/icons/back_white.png'
+import Save from '@assets/icons/save_white.png'
+import InfoScroll from '@Components/InfoScroll'
+import { JdStyle } from './JobDetailStyle'
 
 const JobDetailScreen = () => {
   const { params } = useRoute()
@@ -33,13 +34,13 @@ const JobDetailScreen = () => {
         <SafeAreaView className='items-center justify-center'>
           <View className='flex-row justify-between w-full px-[24px] mb-[12px] mt-[16px]'>
             <TouchableOpacity onPress={() => navigation.goBack()}>
-              <Image style={style.icon} source={Back} />
+              <Image style={JdStyle.icon} source={Back} />
             </TouchableOpacity>
-            <View style={style.logoContainer}>
-              <Image style={style.logo} source={{ uri: image }} />
+            <View style={JdStyle.logoContainer}>
+              <Image style={JdStyle.logo} source={{ uri: image }} />
             </View>
             <TouchableOpacity onPress={() => Alert.alert('save job')}>
-              <Image style={style.icon} source={Save} />
+              <Image style={JdStyle.icon} source={Save} />
             </TouchableOpacity>
           </View>
 
@@ -52,7 +53,7 @@ const JobDetailScreen = () => {
             {
               categories.map((category, idx) => {
                 return (
-                  <View style={style.category} key={idx}>
+                  <View style={JdStyle.category} key={idx}>
                     <Text className='text-center'
                       style={{ color: '#fff', fontFamily: 'Inter_400Regular', fontSize: 11 }}>{category}</Text>
                   </View>
@@ -73,55 +74,13 @@ const JobDetailScreen = () => {
       <View className='mt-[36px] mb-[34px]'>
         <InfoScroll info={info} />
         <View className='w-full items-center'>
-          <TouchableOpacity style={style.apply} onPress={() => Alert.alert('apply job')}>
-            <Text style={style.applyText}>Apply Now</Text>
+          <TouchableOpacity style={JdStyle.apply} onPress={() => Alert.alert('apply job')}>
+            <Text style={JdStyle.applyText}>Apply Now</Text>
           </TouchableOpacity>
         </View>
       </View>
     </View>
   )
 }
-
-const style = StyleSheet.create({
-  logoContainer: {
-    backgroundColor: '#fff',
-    height: 80,
-    width: 80,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 1000,
-  },
-  logo: {
-    width: 40,
-    height: 40,
-    resizeMode: 'contain'
-  },
-  category: {
-    backgroundColor: 'rgba(255, 255, 255, 0.15)',
-    height: 26,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 16,
-    borderRadius: 164
-  },
-  icon: {
-    width: 24,
-    height: 24,
-    resizeMode: 'contain'
-  },
-  apply:{
-    width: 327,
-    height: 56,
-    backgroundColor: '#356899',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 5
-  },
-  applyText:{
-    color: '#fff',
-    fontFamily: 'Inter_500Medium',
-    fontSize: 16
-  }
-})
 
 export default JobDetailScreen
