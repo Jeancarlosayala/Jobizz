@@ -12,7 +12,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getUser, setToggleMenu } from '../Context/user'
 import { useEffect, useRef, useState } from 'react'
 import SideBar from '../Components/SideBar'
-import { setUserAppliedJobs } from '../Context/applied'
 
 const HomeScreen = () => {
   const user = useSelector(getUser)
@@ -32,17 +31,6 @@ const HomeScreen = () => {
       .then(res => setCardJobs(res.data))
       .catch(err => console.log(err))
   }, [])
-
-  useEffect(() => {
-    (async () => {
-      if (user) {
-        await fetch(`http://192.168.1.4:4000/api/jobizz/applied/${user && user.data.id}`)
-          .then(res => res.json())
-          .then(data => dispatch(setUserAppliedJobs(data)))
-          .catch(err => console.log(err))
-      }
-    })()
-  }, [user])
 
   useEffect(() => {
     Animated.timing(progress, {
