@@ -61,7 +61,9 @@ const JobDetailScreen = () => {
     (async () => {
       if (user.loggedIn) {
         const { id } = user.data;
-        await fetch(`http://192.168.1.4:4000/api/jobizz/applied/isapplied/${id}`)
+        await fetch(
+          `http://192.168.1.4:4000/api/jobizz/applied/isapplied/${id}`
+        )
           .then((res) => res.json())
           .then((data) => setJobsAplied(data))
           .catch((err) => console.log(err));
@@ -70,10 +72,10 @@ const JobDetailScreen = () => {
   }, []);
 
   if (!fontsLoaded) return null;
-  if(!jobsAplied && user.loggedIn) return <Text>Loading...</Text>;
-  
-  if(jobsAplied){
-    isApplied = jobsAplied.filter((item, idx) => item.job_id === Number(id))
+  if (!jobsAplied && user.loggedIn) return <Text>Loading...</Text>;
+
+  if (jobsAplied) {
+    isApplied = jobsAplied.filter((item, idx) => item.job_id === Number(id));
   }
 
   return (
@@ -167,7 +169,11 @@ const JobDetailScreen = () => {
             style={JdStyle.apply}
             onPress={() => Alert.alert("apply job")}
           >
-            <Text style={JdStyle.applyText}>{jobsAplied && isApplied.length > 0 ? "You're applied" : 'Apply Now'}</Text>
+            <Text style={JdStyle.applyText}>
+              {jobsAplied && isApplied.length > 0
+                ? "You're applied"
+                : "Apply Now"}
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
