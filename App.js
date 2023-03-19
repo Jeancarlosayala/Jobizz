@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { Provider, useDispatch } from 'react-redux';
 import Onboarding from './Components/Onboarding';
 import { setUser } from './Context/user';
-import ApplicationsScreen from './Screens/ApplicationsScreen';
+import ApplicationsScreen from './Screens/ApplicationsScreen/ApplicationsScreen';
 import JobDetailScreen from './Screens/JobDetailScreen';
 import Login from './Screens/Login';
 import Main from './Screens/Main';
