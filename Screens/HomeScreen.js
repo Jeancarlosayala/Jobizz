@@ -1,17 +1,17 @@
 import { useFonts, Inter_800ExtraBold, Inter_400Regular, Inter_700Bold } from '@expo-google-fonts/inter'
 import { View, Text, SafeAreaView, Image, StyleSheet, TextInput, TouchableOpacity, Alert, Animated } from 'react-native'
 
-import User from '../assets/home/user.png'
-import Search from '../assets/home/search.png'
-import Filter from '../assets/home/filter.png'
-import FeaturedJobs from '../Components/FeaturedJobs'
+import User from '@assets/home/user.png'
+import Search from '@assets/home/search.png'
+import Filter from '@assets/home/filter.png'
+import FeaturedJobs from '@Components/FeaturedJobs'
 
-import PopularJobs from '../Components/PopularJobs'
+import PopularJobs from '@Components/PrimaryCard/PopularJobs'
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
-import { getUser, setToggleMenu } from '../Context/user'
+import { getUser, setToggleMenu } from '@Context/user'
 import { useEffect, useRef, useState } from 'react'
-import SideBar from '../Components/SideBar'
+import SideBar from '@Components/SideBar'
 
 const HomeScreen = () => {
   const user = useSelector(getUser)
@@ -116,7 +116,7 @@ const HomeScreen = () => {
             </TouchableOpacity>
           </View>
           <View className='ml-[24px] mt-[20px]'>
-            <PopularJobs data={cardJobs} />
+            <PopularJobs heightView={165} height={74} data={cardJobs} />
           </View>
         </View>
       </SafeAreaView>

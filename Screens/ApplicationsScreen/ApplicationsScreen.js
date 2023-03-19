@@ -2,9 +2,7 @@ import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
-  FlatList,
   Image,
-  StyleSheet,
   SafeAreaView,
   TouchableOpacity,
   ScrollView,
@@ -13,11 +11,11 @@ import { useSelector } from "react-redux";
 import { getUser } from "../../Context/user";
 import { useNavigation } from "@react-navigation/native";
 
-import Currency from "react-currency-formatter";
 import Back from "../../assets/icons/back_black.png";
 import User from "../../assets/home/user.png";
 
 import { applicationsStyle } from "./applicationsStyle";
+import PopularJobs from "../../Components/PrimaryCard/PopularJobs";
 
 const ApplicationsScreen = () => {
   const user = useSelector(getUser);
@@ -25,6 +23,7 @@ const ApplicationsScreen = () => {
   const [appliedJobs, setAppliedJobs] = useState();
   const [categoryJob, setCategoryJob] = useState("All");
   const [filterIndex, setFilterIndex] = useState(0);
+  const [quantityItems, setQuantityItems] = useState(6)
   let filterJobs;
 
   const statusJob = ["All", "Delivered", "Reviewing", "Cancelled"];
@@ -50,7 +49,7 @@ const ApplicationsScreen = () => {
   };
 
   if (filterIndex === 0) {
-    filterJobs = appliedJobs.filter((item, idx) => item);
+    filterJobs = appliedJobs.filter((item, idx) => item && idx < quantityItems);
   } else {
     filterJobs = appliedJobs.filter((item, idx) => item.status === categoryJob);
   }
@@ -109,58 +108,9 @@ const ApplicationsScreen = () => {
       </SafeAreaView>
 
       <View className="items-center h-[504px]">
-        <FlatList
-          data={filterJobs}
-          renderItem={(item) => <AplicationItem item={item} />}
-        />
+        <PopularJobs heightView={478} data={filterJobs} height={140} />
       </View>
     </View>
-  );
-};
-
-const AplicationItem = ({ item }) => {
-  const { status, payment, company, jobname, image, location } = item.item;
-
-  return (
-    <TouchableOpacity className="mb-[20px]">
-      <View className="bg-white w-[327px] h-[140px] justify-center rounded-[10px] px-[10px]">
-        <View className="items-center justify-around flex-row rounded-[20px] mb-[23px]">
-          <View>
-            <Image style={applicationsStyle.logo} source={{ uri: image }} />
-          </View>
-          <View>
-            <Text style={applicationsStyle.positionText}>{jobname}</Text>
-            <Text style={applicationsStyle.grayText}>{company}</Text>
-          </View>
-          <View>
-            <Text style={applicationsStyle.salaryText}>
-              $<Currency quantity={payment} pattern="##,### " />
-            </Text>
-            <Text style={applicationsStyle.grayText}>{location}</Text>
-          </View>
-        </View>
-
-        <View className="px-[14px]">
-          <View
-            style={
-              (status === "Delivered" && applicationsStyle.delivered) ||
-              (status === "Cancelled" && applicationsStyle.cancel) ||
-              (status === "Reviewing" && applicationsStyle.review)
-            }
-          >
-            <Text
-              style={
-                (status === "Delivered" && applicationsStyle.deliveredText) ||
-                (status === "Cancelled" && applicationsStyle.cancelText) ||
-                (status === "Reviewing" && applicationsStyle.reviewText)
-              }
-            >
-              {status}
-            </Text>
-          </View>
-        </View>
-      </View>
-    </TouchableOpacity>
   );
 };
 
