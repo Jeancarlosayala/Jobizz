@@ -2,7 +2,6 @@ import {
   View,
   Text,
   SafeAreaView,
-  StyleSheet,
   Image,
   TouchableOpacity,
   Alert,
@@ -18,9 +17,9 @@ import {
   Inter_300Light,
 } from "@expo-google-fonts/inter";
 import { JdStyle } from "./JobDetailStyle";
-import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { getUser } from "@Context/user";
+import { getAppliedJobs } from "../../Context/applied";
 
 import Currency from "react-currency-formatter";
 
@@ -30,10 +29,11 @@ import Save from "@assets/icons/save_white.png";
 import InfoScroll from "@Components/InfoScroll";
 
 const JobDetailScreen = () => {
-  const { params } = useRoute();
-  const [jobsAplied, setJobsAplied] = useState();
+  const appliedJobs = useSelector(getAppliedJobs)
   const user = useSelector(getUser);
   const navigation = useNavigation();
+  const { params } = useRoute();
+  
   let isApplied;
 
   const {
@@ -41,7 +41,6 @@ const JobDetailScreen = () => {
     image,
     categories,
     id,
-    imageid,
     jobname,
     location,
     payment,
@@ -57,25 +56,11 @@ const JobDetailScreen = () => {
     Inter_300Light,
   });
 
-  useEffect(() => {
-    (async () => {
-      if (user.loggedIn) {
-        const { id } = user.data;
-        await fetch(
-          `http://192.168.1.4:4000/api/jobizz/applied/isapplied/${id}`
-        )
-          .then((res) => res.json())
-          .then((data) => setJobsAplied(data))
-          .catch((err) => console.log(err));
-      }
-    })();
-  }, []);
-
   if (!fontsLoaded) return null;
-  if (!jobsAplied && user.loggedIn) return <Text>Loading...</Text>;
+  if (!appliedJobs && user.loggedIn) return <Text>Loading...</Text>;
 
-  if (jobsAplied) {
-    isApplied = jobsAplied.filter((item, idx) => item.job_id === Number(id));
+  if (appliedJobs) {
+    isApplied = appliedJobs.filter((item, idx) => item.job_id === Number(id));
   }
 
   return (
@@ -167,10 +152,14 @@ const JobDetailScreen = () => {
         <View className="w-full items-center">
           <TouchableOpacity
             style={JdStyle.apply}
-            onPress={() => Alert.alert("apply job")}
+            onPress={() =>
+              appliedJobs && isApplied.length > 0
+                ? navigation.goBack()
+                : navigation.navigate('ApplyJob', {item: params.item})
+            }
           >
             <Text style={JdStyle.applyText}>
-              {jobsAplied && isApplied.length > 0
+              {appliedJobs && isApplied.length > 0
                 ? "You're applied"
                 : "Apply Now"}
             </Text>
