@@ -1,6 +1,7 @@
 import { View, Text, SafeAreaView, Image, TouchableOpacity, StyleSheet, TextInput, Alert } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { useFonts, Inter_800ExtraBold, Inter_500Medium, Inter_400Regular, Inter_300Light, Inter_700Bold } from '@expo-google-fonts/inter'
+import { HOST_BACKEND } from "@env";
 
 import BackArrow from '@assets/auth/back.png'
 import Logo from '@assets/logo/Jobizz.png'
@@ -23,7 +24,7 @@ const Login = () => {
   const handlerLogin = async () => {
     if (field.email === '' || field.password === '') { return Alert.alert('Please complete all the inputs') }
 
-    await fetch('http://192.168.1.4:4000/api/jobizz/user/login/', {
+    await fetch(`http://${HOST_BACKEND}:4000/api/jobizz/user/login/`, {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",

@@ -1,6 +1,7 @@
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { getUser, setToggleMenu, setUser } from '../Context/user'
+import { HOST_BACKEND } from "@env";
 
 import User from '../assets/home/user.png'
 import { useFonts, Inter_800ExtraBold, Inter_700Bold, Inter_600SemiBold, Inter_500Medium, Inter_400Regular, } from '@expo-google-fonts/inter'
@@ -24,7 +25,7 @@ const SideBar = () => {
   })
 
   const logOut = async () => {
-    await fetch('http://192.168.1.4:4000/api/jobizz/user/logout/', {
+    await fetch(`http://${HOST_BACKEND}:4000/api/jobizz/user/logout/`, {
       method: 'POST'
     }).then(res => res.json())
       .then(data => dispatch(setUser(data)))

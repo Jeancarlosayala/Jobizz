@@ -8,14 +8,15 @@ import {
   ScrollView,
 } from "react-native";
 import { useSelector } from "react-redux";
-import { getUser } from "../../Context/user";
+import { getUser } from "@Context/user";
 import { useNavigation } from "@react-navigation/native";
+import { HOST_BACKEND } from "@env";
 
-import Back from "../../assets/icons/back_black.png";
-import User from "../../assets/home/user.png";
+import Back from "@assets/icons/back_black.png";
+import User from "@assets/home/user.png";
 
 import { applicationsStyle } from "./applicationsStyle";
-import PopularJobs from "../../Components/PrimaryCard/PopularJobs";
+import PopularJobs from "@Components/PrimaryCard/PopularJobs";
 
 const ApplicationsScreen = () => {
   const user = useSelector(getUser);
@@ -32,7 +33,7 @@ const ApplicationsScreen = () => {
     (async () => {
       if (user) {
         await fetch(
-          `http://192.168.1.4:4000/api/jobizz/applied/${user.data.id}`
+          `http://${HOST_BACKEND}:4000/api/jobizz/applied/${user.data.id}`
         )
           .then((res) => res.json())
           .then((data) => setAppliedJobs(data))

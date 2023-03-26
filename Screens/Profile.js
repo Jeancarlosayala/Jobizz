@@ -1,6 +1,6 @@
-import { useState } from 'react'
-import { View, Text, SafeAreaView, TouchableOpacity } from 'react-native'
+import {  Text, SafeAreaView, TouchableOpacity } from 'react-native'
 import * as ImagePicker from 'expo-image-picker';
+import { HOST_BACKEND, BOUNDARY } from "@env";
 
 
 const Profile = () => {
@@ -22,10 +22,10 @@ const Profile = () => {
 
     if (!result.canceled) {
       // Aquí puedes hacer algo con la imagen seleccionada, como enviarla a un servidor.
-      fetch('http://192.168.1.4:4000/api/jobizz/user/', {
+      fetch(`http://${HOST_BACKEND}:4000/api/jobizz/user/`, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'multipart/form-data; boundary=----MyCustomBoundary123'
+          'Content-Type': `multipart/form-data; boundary=${BOUNDARY}`
         },
         body: formData
       })

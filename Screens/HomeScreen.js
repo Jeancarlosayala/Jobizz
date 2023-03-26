@@ -11,6 +11,7 @@ import { useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
 import { getUser, setToggleMenu } from '@Context/user'
 import { useEffect, useRef, useState } from 'react'
+import { HOST_BACKEND } from "@env";
 import SideBar from '@Components/SideBar'
 
 const HomeScreen = () => {
@@ -26,7 +27,7 @@ const HomeScreen = () => {
   }
 
   useEffect(() => {
-    fetch('http://192.168.1.4:4000/api/jobizz/job/')
+    fetch(`http://${HOST_BACKEND}:4000/api/jobizz/job/`)
       .then(res => res.json())
       .then(res => setCardJobs(res.data))
       .catch(err => console.log(err))

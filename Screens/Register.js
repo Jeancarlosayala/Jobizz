@@ -2,11 +2,12 @@ import { View, Text, SafeAreaView, Image, TouchableOpacity, StyleSheet, TextInpu
 import { useNavigation } from '@react-navigation/native'
 import { useFonts, Inter_800ExtraBold, Inter_500Medium, Inter_400Regular, Inter_300Light, Inter_700Bold } from '@expo-google-fonts/inter'
 
-import BackArrow from '../assets/auth/back.png'
-import Logo from '../assets/logo/Jobizz.png'
+import BackArrow from '@assets/auth/back.png'
+import Logo from '@assets/logo/Jobizz.png'
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { setUser } from '../Context/user'
+import { setUser } from '@Context/user'
+import { HOST_BACKEND } from "@env";
 
 const formFields = {
   name: '',
@@ -27,7 +28,7 @@ const Register = () => {
   const handlerRegister = async () => {
     if (field.email === '' || field.password === '') { return Alert.alert('Please complete all the inputs') }
 
-    await fetch('http://192.168.1.6:4000/api/jobizz/user/register/', {
+    await fetch(`http://${HOST_BACKEND}:4000/api/jobizz/user/register/`, {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",

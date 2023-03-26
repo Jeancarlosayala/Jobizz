@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Provider, useDispatch } from "react-redux";
 import Onboarding from "@Components/Onboarding";
 import { setUser } from "@Context/user";
+import { HOST_BACKEND } from "@env";
 
 import ApplicationsScreen from "@Screens/ApplicationsScreen/ApplicationsScreen";
 import JobDetailScreen from "@Screens/JobDetail/JobDetailScreen";
@@ -33,15 +34,20 @@ const Views = () => {
 
   useEffect(() => {
     const getSession = async () => {
-      await fetch("http://192.168.1.4:4000/api/jobizz/user/login/")
+      await fetch(`http://${HOST_BACKEND}:4000/api/jobizz/user/login/`)
         .then((res) => res.json())
         .then((data) => {
           dispatch(setUser(data));
 
-          fetch(`http://192.168.1.4:4000/api/jobizz/applied/isapplied/${data.data.id}`)
-            .then((res) => res.json())
-            .then((data) => dispatch(setUserAppliedJobs(data)))
-            .catch((err) => console.log(err));
+          if(data.loggedIn){
+            fetch(
+              `http://${HOST_BACKEND}:4000/api/jobizz/applied/isapplied/${data.data.id}`
+            )
+              .then((res) => res.json())
+              .then((data) => dispatch(setUserAppliedJobs(data)))
+              .catch((err) => console.log(err));
+          }
+          
         })
         .catch((err) => console.log(err));
     };
