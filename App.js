@@ -13,6 +13,7 @@ import Main from "@Screens/Main";
 import Profile from "@Screens/Profile";
 import Register from "@Screens/Register";
 import ApplyJob from "@Screens/ApplyJob/ApplyJob";
+import ApplySuccess from "@Screens/ApplySuccess/ApplySuccess";
 
 import { store } from "./store";
 import { setUserAppliedJobs } from "./Context/applied";
@@ -78,6 +79,11 @@ const Views = () => {
         name="ApplyJob"
         component={ApplyJob}
         options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ApplySuccess"
+        component={ApplySuccess}
+        options={{ headerShown: false, presentation: 'fullScreenModal' }}
       />
     </Stack.Navigator>
   );
