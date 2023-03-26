@@ -28,8 +28,10 @@ const SideBar = () => {
     await fetch(`http://${HOST_BACKEND}:4000/api/jobizz/user/logout/`, {
       method: 'POST'
     }).then(res => res.json())
-      .then(data => dispatch(setUser(data)))
-      .then(() => dispatch(setToggleMenu(false)))
+      .then(data => {
+        dispatch(setUser(data))
+        dispatch(setToggleMenu(false))
+      })
       .catch(err => console.log(err))
   }
 

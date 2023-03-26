@@ -35,7 +35,7 @@ const Login = () => {
       .then(data => {
         dispatch(setUser(data));
         if (data.loggedIn === true) {
-          navigation.navigate('Main');
+          navigation.goBack();
         }
       })
       .catch(err => console.log(err))
