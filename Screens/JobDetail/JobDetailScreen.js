@@ -155,7 +155,7 @@ const JobDetailScreen = () => {
             onPress={() =>
               appliedJobs && isApplied.length > 0
                 ? navigation.goBack()
-                : navigation.navigate('ApplyJob', {item: params.item})
+                : navigation.navigate(user.loggedIn ? 'ApplyJob' : 'Login', {item: params.item})
             }
           >
             <Text style={JdStyle.applyText}>
