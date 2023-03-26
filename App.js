@@ -33,25 +33,12 @@ const Views = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const getSession = async () => {
+    (async () =>{
       await fetch(`http://${HOST_BACKEND}:4000/api/jobizz/user/login/`)
-        .then((res) => res.json())
-        .then((data) => {
-          dispatch(setUser(data));
-
-          if(data.loggedIn){
-            fetch(
-              `http://${HOST_BACKEND}:4000/api/jobizz/applied/isapplied/${data.data.id}`
-            )
-              .then((res) => res.json())
-              .then((data) => dispatch(setUserAppliedJobs(data)))
-              .catch((err) => console.log(err));
-          }
-          
-        })
-        .catch((err) => console.log(err));
-    };
-    getSession();
+      .then((res) => res.json())
+      .then((data) =>dispatch(setUser(data)))
+      .catch((err) => console.log(err));
+    })()
   }, []);
 
   return (
