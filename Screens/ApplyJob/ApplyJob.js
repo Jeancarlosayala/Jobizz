@@ -6,18 +6,21 @@ import {
   Image,
   TouchableOpacity,
   TextInput,
-  Alert,
 } from "react-native";
-import { ApStyles } from "./ApplyJobStyle";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useSelector } from "react-redux";
+
+import PopularJobs from "@Components/PrimaryCard/PopularJobs";
+import Button from "@Components/Button/Button";
+import Checkbox from "expo-checkbox";
+
 import { getUser } from "@Context/user";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { HOST_BACKEND } from "@env";
 
 import Back from "@assets/icons/back_black.png";
-import PopularJobs from "@Components/PrimaryCard/PopularJobs";
-import Checkbox from "expo-checkbox";
-import Button from "@Components/Button/Button";
+
+import { ApStyles } from "./ApplyJobStyle";
 
 const ApplyJob = () => {
   const [ischecked, setIschecked] = useState(false);
@@ -27,9 +30,29 @@ const ApplyJob = () => {
   const user = useSelector(getUser);
   const { name, image } = user.data;
 
-  const alert = () =>{
-    Alert.alert('hola')
-  }
+  const { company, id } = params.item;
+
+  const handlerPostJob = async () => {
+    await fetch(`http://${HOST_BACKEND}:4000/api/jobizz/applied/`,{
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        company,
+        job_id: Number(id),
+        status: 'Delivered'
+      })
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log(data)
+      if(data.applied){
+        navigation.navigate('ApplySuccess')
+      }
+    })
+    .catch(err => console.log(err))
+  };
 
   return (
     <View className="px-[24px] bg-[#FAFAFD] h-full">
@@ -87,7 +110,7 @@ const ApplyJob = () => {
           </View>
         </View>
 
-        <View className='mb-[32px]'>
+        <View className="mb-[32px]">
           <Text style={ApStyles.headerText} className="mb-[16px]">
             Cover Later
             <Text style={ApStyles.optionalText}>(Optional)</Text>
@@ -101,7 +124,7 @@ const ApplyJob = () => {
           />
         </View>
 
-        <Button styles={'primary'} onPress={alert}>
+        <Button style={"primary"} onPress={handlerPostJob}>
           <Text style={ApStyles.whiteText}>Apply</Text>
         </Button>
       </KeyboardAwareScrollView>
