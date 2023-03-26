@@ -34,7 +34,6 @@ const PopularJobs = ({ data, height, heightView }) => {
 
   if (!fontsLoaded) return null;
 
-
   return (
     <View style={{ height: heightView }}>
       <FlatList
@@ -69,13 +68,13 @@ const PopularJobsItem = ({ item, height }) => {
           </View>
           <View>
             <Text style={PoStyles.positionText}>{jobname}</Text>
-            <Text style={PoStyles.grayText}>{company}</Text>
+            <Text style={[PoStyles.grayText, {marginTop: 4}]}>{company}</Text>
           </View>
           <View>
             <Text style={PoStyles.salaryText}>
               $<Currency quantity={payment} pattern="##,### " />
             </Text>
-            <Text style={PoStyles.grayText}>{location}</Text>
+            <Text style={[PoStyles.grayText, {marginTop: 4}]}>{location}</Text>
           </View>
         </View>
 
