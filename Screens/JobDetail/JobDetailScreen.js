@@ -20,6 +20,7 @@ import { JdStyle } from "./JobDetailStyle";
 import { useSelector } from "react-redux";
 import { getUser } from "@Context/user";
 import { getAppliedJobs } from "../../Context/applied";
+import { HOST_BACKEND } from "@env";
 
 import Currency from "react-currency-formatter";
 
@@ -27,9 +28,11 @@ import BGCards from "@assets/home/backgroundCard.png";
 import Back from "@assets/icons/back_white.png";
 import Save from "@assets/icons/save_white.png";
 import InfoScroll from "@Components/InfoScroll";
+import { useEffect, useState } from "react";
 
 const JobDetailScreen = () => {
-  const appliedJobs = useSelector(getAppliedJobs)
+  // const appliedJobs = useSelector(getAppliedJobs)
+  const [applied, setApplied] = useState(null)
   const user = useSelector(getUser);
   const navigation = useNavigation();
   const { params } = useRoute();
@@ -55,12 +58,25 @@ const JobDetailScreen = () => {
     Inter_400Regular,
     Inter_300Light,
   });
+  
+  useEffect(() =>{
+    (async () =>{
+      if(user.loggedIn){
+        fetch(
+          `http://${HOST_BACKEND}:4000/api/jobizz/applied/isapplied/${user.data.id}`
+        )
+          .then((res) => res.json())
+          .then((data) => setApplied(data))
+          .catch((err) => console.log(err));
+      }
+    })()
+  }, [user])
 
   if (!fontsLoaded) return null;
-  if (!appliedJobs && user.loggedIn) return <Text>Loading...</Text>;
+  if (!user) return <Text>Loading...</Text>;
 
-  if (appliedJobs) {
-    isApplied = appliedJobs.filter((item, idx) => item.job_id === Number(id));
+  if (applied) {
+    isApplied = applied.filter((item, idx) => item.job_id === Number(id));
   }
 
   return (
@@ -153,13 +169,13 @@ const JobDetailScreen = () => {
           <TouchableOpacity
             style={JdStyle.apply}
             onPress={() =>
-              appliedJobs && isApplied.length > 0
+              applied && isApplied.length > 0 && user.loggedIn
                 ? navigation.goBack()
                 : navigation.navigate(user.loggedIn ? 'ApplyJob' : 'Login', {item: params.item})
             }
           >
             <Text style={JdStyle.applyText}>
-              {appliedJobs && isApplied.length > 0
+              {applied && isApplied.length > 0 && user.loggedIn
                 ? "You're applied"
                 : "Apply Now"}
             </Text>
