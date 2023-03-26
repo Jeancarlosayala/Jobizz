@@ -28,27 +28,20 @@ import BGCards from "@assets/home/backgroundCard.png";
 import Back from "@assets/icons/back_white.png";
 import Save from "@assets/icons/save_white.png";
 import InfoScroll from "@Components/InfoScroll";
+import Button from "@Components/Button/Button";
 import { useEffect, useState } from "react";
 
 const JobDetailScreen = () => {
   // const appliedJobs = useSelector(getAppliedJobs)
-  const [applied, setApplied] = useState(null)
+  const [applied, setApplied] = useState(null);
   const user = useSelector(getUser);
   const navigation = useNavigation();
   const { params } = useRoute();
-  
+
   let isApplied;
 
-  const {
-    company,
-    image,
-    categories,
-    id,
-    jobname,
-    location,
-    payment,
-    info,
-  } = params.item;
+  const { company, image, categories, id, jobname, location, payment, info } =
+    params.item;
 
   const [fontsLoaded] = useFonts({
     Inter_800ExtraBold,
@@ -58,10 +51,10 @@ const JobDetailScreen = () => {
     Inter_400Regular,
     Inter_300Light,
   });
-  
-  useEffect(() =>{
-    (async () =>{
-      if(user.loggedIn){
+
+  useEffect(() => {
+    (async () => {
+      if (user.loggedIn) {
         fetch(
           `http://${HOST_BACKEND}:4000/api/jobizz/applied/isapplied/${user.data.id}`
         )
@@ -69,8 +62,16 @@ const JobDetailScreen = () => {
           .then((data) => setApplied(data))
           .catch((err) => console.log(err));
       }
-    })()
-  }, [user])
+    })();
+  }, [user]);
+
+  const handlerApply = () => {
+    applied && isApplied.length > 0 && user.loggedIn
+      ? navigation.goBack()
+      : navigation.navigate(user.loggedIn ? "ApplyJob" : "Login", {
+          item: params.item,
+        });
+  };
 
   if (!fontsLoaded) return null;
   if (!user) return <Text>Loading...</Text>;
@@ -166,20 +167,16 @@ const JobDetailScreen = () => {
       <View className="mt-[36px] mb-[34px]">
         <InfoScroll info={info} />
         <View className="w-full items-center">
-          <TouchableOpacity
-            style={JdStyle.apply}
-            onPress={() =>
-              applied && isApplied.length > 0 && user.loggedIn
-                ? navigation.goBack()
-                : navigation.navigate(user.loggedIn ? 'ApplyJob' : 'Login', {item: params.item})
-            }
+          <Button
+            style={'primary'}
+            onPress={handlerApply}
           >
             <Text style={JdStyle.applyText}>
               {applied && isApplied.length > 0 && user.loggedIn
                 ? "You're applied"
                 : "Apply Now"}
             </Text>
-          </TouchableOpacity>
+          </Button>
         </View>
       </View>
     </View>
